@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <p class="lead">Количество активных рассылок: {{ count_active_dist }}</p>
+    <p class="lead">Количество рассылок: {{ distributions.count }}</p>
+    <p class="lead">Количество уникальных получателей: {{ count_recipients }}</p>
+    <a href="{% url 'distribution:dis_create' %}" class="btn btn-lg btn-block btn-outline-primary mb-4">Добавить Рассылку</a>
+{% endif %}
+<div class="row text-center">
+    {% for distribution in distributions %}
+        <div class="col-3">
+            <div class="card mb-4" style="width: 18rem;">
+                  <div class="card-body">
+                      <h5 class="card-title">{{ distribution.message }}</h5>
+                      {% for recipients in distribution.recipients.all %}
+                          <p class="card-text">{{ recipients.email }}</p>
+                      {% endfor %}
+                      {% if user.is_authenticated %}
+                          <a href="#" class="btn btn-primary">Посмотреть</a>
+                          {% if user == distribution.owner %}
+                              <a href="{% url 'distribution:dis_update' distribution.pk %}" class="btn btn-secondary">Редактировать</a>
+                          {% endif %}
+                          {% if user == distribution.owner %}
+                              <a href="{% url 'distribution:dis_delete' distribution.pk %}" class="btn btn-danger">Удалить</a>
+                          {% endif %}
+                          <a href="{% url 'distribution:send_dis' distribution.pk %}" class="btn btn-primary">Отправить сообщение</a>
+                      {% endif %}
+                  </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

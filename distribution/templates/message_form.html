@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form method="post" action="" class="form-floating">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>
+        <a href="{% url 'distribution:messages' %}" class="btn btn-lg btn-block btn-outline-secondary">Назад</a>
+    </form>
+{% endblock %}

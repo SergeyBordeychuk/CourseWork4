@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h2 class="display-4">Вы точно хотите удалить?</h2>
+        <form method="post" action="" class="form-floating">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-lg btn-block btn-outline-danger">Удалить</button>
+                        <a href="{% url 'distribution:distributions' %}" class="btn btn-lg btn-block btn-outline-secondary">Отмена</a>
+                    </form>
+    </div>
+{% endblock %}
