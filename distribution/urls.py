@@ -2,7 +2,8 @@ from django.urls import path
 
 from distribution.views import DistributionListView, RecipientListView, MessageListView, ContactTemplateView, \
     MessageCreateView, RecipientCreateView, DistributionCreateView, DistributionUpdateView, MessageUpdateView, \
-    RecipientUpdateView, DistributionDeleteView, MessageDeleteView, RecipientDeleteView, send_mailing, count_main
+    RecipientUpdateView, DistributionDeleteView, MessageDeleteView, RecipientDeleteView, send_mailing, count_main, \
+    stop_mailing, ReportsListView, UserListView, block_user
 
 app_name = 'distribution'
 
@@ -22,4 +23,8 @@ urlpatterns = [
     path('message/delete/<int:pk>', MessageDeleteView.as_view(), name='mes_delete'),
     path('distribution/send_distribution/<int:pk>', send_mailing, name='send_dis'),
     path('distribution/send_data/', count_main, name='count'),
+    path('distribution/stop/<int:pk>', stop_mailing, name='stop'),
+    path('reports/', ReportsListView.as_view(), name='reports'),
+    path('user_list/', UserListView.as_view(), name='users_list'),
+    path('block/<int:pk>', block_user, name='block'),
 ]

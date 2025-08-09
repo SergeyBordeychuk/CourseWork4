@@ -18,14 +18,23 @@
                           <p class="card-text">{{ recipients.email }}</p>
                       {% endfor %}
                       {% if user.is_authenticated %}
-                          <a href="#" class="btn btn-primary">Посмотреть</a>
-                          {% if user == distribution.owner %}
-                              <a href="{% url 'distribution:dis_update' distribution.pk %}" class="btn btn-secondary">Редактировать</a>
+                          <a href="#" class="btn btn-primary mb-1">Посмотреть</a>
+                          {% if user == distribution.owner or 'distribution.update_distribution' %}
+                              <a href="{% url 'distribution:dis_update' distribution.pk %}" class="btn btn-secondary mb-1">Редактировать</a>
                           {% endif %}
-                          {% if user == distribution.owner %}
-                              <a href="{% url 'distribution:dis_delete' distribution.pk %}" class="btn btn-danger">Удалить</a>
+                          {% if user == distribution.owner or 'distribution.delete_distribution' %}
+                              <a href="{% url 'distribution:dis_delete' distribution.pk %}" class="btn btn-danger mb-1">Удалить</a>
                           {% endif %}
-                          <a href="{% url 'distribution:send_dis' distribution.pk %}" class="btn btn-primary">Отправить сообщение</a>
+                          {% if distribution.status != 'Launched' %}
+                            {% if user == distribution.owner or 'distribution.start_distribution' %}
+                              <a href="{% url 'distribution:send_dis' distribution.pk %}" class="btn btn-primary mb-1">Начать рассылку</a>
+                            {% endif %}
+                          {% endif %}
+                          {% if distribution.status == 'Launched' %}
+                            {% if user == distribution.owner or 'distribution.stop_distribution' %}
+                              <a href="{% url 'distribution:stop' distribution.pk %}" class="btn btn-primary mb-1">Остановить рассылку</a>
+                            {% endif %}
+                          {% endif %}
                       {% endif %}
                   </div>
             </div>

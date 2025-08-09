@@ -6,24 +6,28 @@
     <a href="{% url 'distribution:mes_create' %}" class="btn btn-lg btn-block btn-outline-primary mb-4">Добавить Сообщение</a>
 {% endif %}
 <div class="row text-center">
-    {% for message in messages %}
-        <div class="col-3">
-            <div class="card mb-4" style="width: 18rem;">
-                  <div class="card-body">
-                      <h5 class="card-title">{{ message.theme }}</h5>
-                      <p class="card-text">{{ message.message }}</p>
-                      {% if user.is_authenticated %}
-                          <a href="#" class="btn btn-primary">Посмотреть</a>
-                          {% if user == message.owner %}
-                              <a href="{% url 'distribution:mes_update' message.pk %}" class="btn btn-secondary">Редактировать</a>
-                          {% endif %}
-                          {% if user == message.owner %}
-                              <a href="{% url 'distribution:mes_delete' message.pk %}" class="btn btn-danger">Удалить</a>
-                          {% endif %}
-                      {% endif %}
-                  </div>
-            </div>
-        </div>
-    {% endfor %}
+    {% if user.is_authenticated %}
+        {% for message in messages %}
+            {% if user == message.owner or 'distribution.view_message' %}
+                <div class="col-3">
+                    <div class="card mb-4" style="width: 18rem;">
+                          <div class="card-body">
+                              <h5 class="card-title">{{ message.theme }}</h5>
+                              <p class="card-text">{{ message.message }}</p>
+                              {% if user.is_authenticated %}
+                                  <a href="#" class="btn btn-primary mb-1">Посмотреть</a>
+                                  {% if user == message.owner or 'distribution.update_message' %}
+                                      <a href="{% url 'distribution:mes_update' message.pk %}" class="btn btn-secondary mb-1">Редактировать</a>
+                                  {% endif %}
+                                  {% if user == message.owner or 'distribution.delete_message' %}
+                                      <a href="{% url 'distribution:mes_delete' message.pk %}" class="btn btn-danger mb-1">Удалить</a>
+                                  {% endif %}
+                              {% endif %}
+                          </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}

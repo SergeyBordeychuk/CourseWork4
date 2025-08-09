@@ -16,6 +16,10 @@ class MailingRecipient(models.Model):
     def __str__(self):
         return f'{self.full_name} {self.email}'
 
+    class Meta:
+        verbose_name = 'получатель'
+        verbose_name_plural = 'получатели'
+
 
 class Message(models.Model):
     theme = models.CharField(max_length=100)
@@ -26,6 +30,10 @@ class Message(models.Model):
 
     def __str__(self):
         return f'{self.theme}'
+
+    class Meta:
+        verbose_name = 'сообщение'
+        verbose_name_plural = 'сообщения'
 
 
 class Distribution(models.Model):
@@ -46,6 +54,16 @@ class Distribution(models.Model):
     def __str__(self):
         return f'{self.message}'
 
+    class Meta:
+        verbose_name = 'рассылка'
+        verbose_name_plural = 'рассылки'
+        permissions = [
+            ("stop_distribution", "Can stop distribution"),
+            ("start_distribution", "Can start distribution"),
+            ("block_user", "Can block user"),
+            ("view_user", "Can view user"),
+        ]
+
 
 class AttemptToSend(models.Model):
     STATUS_CHOICES = (
@@ -56,3 +74,11 @@ class AttemptToSend(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
     response = models.TextField()
     distribution = models.ForeignKey(Distribution, on_delete=models.CASCADE)
+
+
+    class Meta:
+        verbose_name = 'отчет'
+        verbose_name_plural = 'отчеты'
+        permissions = [
+            ("view_reports", "Can view reports"),
+        ]

@@ -13,12 +13,12 @@
                       <h5 class="card-title">{{ recipient.full_name }}</h5>
                       <p class="card-text">{{ recipient.comment }}</p>
                       {% if user.is_authenticated %}
-                          <a href="#" class="btn btn-primary">Посмотреть</a>
-                          {% if user == recipient.owner %}
-                              <a href="{% url 'distribution:rec_update' recipient.pk %}" class="btn btn-secondary">Редактировать</a>
+                          <a href="#" class="btn btn-primary mb-1">Посмотреть</a>
+                          {% if user == recipient.owner or 'distribution.update_recipient' %}
+                              <a href="{% url 'distribution:rec_update' recipient.pk %}" class="btn btn-secondary mb-1">Редактировать</a>
                           {% endif %}
-                          {% if user == recipient.owner %}
-                              <a href="{% url 'distribution:rec_delete' recipient.pk %}" class="btn btn-danger">Удалить</a>
+                          {% if user == recipient.owner or 'distribution.delete_recipient' %}
+                              <a href="{% url 'distribution:rec_delete' recipient.pk %}" class="btn btn-danger mb-1">Удалить</a>
                           {% endif %}
                       {% endif %}
                   </div>

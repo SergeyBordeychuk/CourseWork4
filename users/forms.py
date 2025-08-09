@@ -28,3 +28,20 @@ class CustomUserCreationForm(UserCreationForm):
             'class': 'form-control',
             'placeholder': 'Подтвердите пароль'
         })
+
+
+class CustomUserUpdatePasswordForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = ('password1', 'password2',)
+
+    def __init__(self, *args, **kwargs):
+        super(CustomUserUpdatePasswordForm, self).__init__(*args, **kwargs)
+        self.fields['password1'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Введите пароль'
+        })
+        self.fields['password2'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Подтвердите пароль'
+        })

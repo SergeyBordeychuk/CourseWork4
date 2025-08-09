@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     'distribution',
     'users',
+    'celery',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +151,21 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 LOGIN_REDIRECT_URL = 'distribution:distributions'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+    }
+}
+
+CACHE_ENABLED = os.getenv('CACHE_ENABLED') == 'True'
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_TIMEZONE = 'Europe/Moscow'
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 20  # 30 минут
+CELERY_TASK_SOFT_TIME_LIMIT = 25 * 60
+
+

@@ -1,0 +1,18 @@
+{% extends 'base_user.html' %}
+{% block content %}
+<div class="row text-center">
+        <div class="col-3">
+            <div class="card mb-4" style="width: 18rem;">
+                  <div class="card-body">
+                      <h5 class="card-title">{{ username }}</h5>
+                      <p class="card-text">{{ email }}</p>
+                      <p class="card-text">{{ fullname }}</p>
+                      <p class="card-text">{{ country }}</p>
+                      <p class="card-text">{{ phone }}</p>
+                      <a href="{% url 'users:change_pass' pk %}" class="btn btn-lg btn-block btn-outline-danger">Изменить пароль</a>
+                      <a href="{% url 'distribution:distributions' %}" class="btn btn-lg btn-block btn-outline-secondary">Назад</a>
+                  </div>
+            </div>
+        </div>
+</div>
+{% endblock %}
